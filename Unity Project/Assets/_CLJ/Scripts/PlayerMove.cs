@@ -14,6 +14,9 @@ public class PlayerMove : MonoBehaviour
     float jumpPower = 10.0f;
     int jumpCount = 0;
 
+    //public float PlayerHp = 100.0f;
+    //public float cerruntHp = 100.0f;
+
     private void Start()
     {
         cc = GetComponent<CharacterController>();

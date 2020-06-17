@@ -11,8 +11,6 @@ public class Granade : MonoBehaviour
     //폭탄이 다른 오브젝트들과 충돌하면 터져야 한다
 
     public GameObject effectFactory;
-    //public GameObject granadeFactory;
-    //public float throwPower = 20.0f;
 
     //충돌처리
     private void OnCollisionEnter(Collision collision)

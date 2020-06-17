@@ -9,6 +9,15 @@ public class PlayerFire : MonoBehaviour
     public GameObject PointGranade;
     public float throwPower = 20.0f;
 
+    EnemeyFSM em;
+
+
+    private void Start()
+    {
+        em = GameObject.Find("Enemy").GetComponent<EnemeyFSM>();
+    }
+
+
     // Update is called once per frame
     void Update()
     {
@@ -28,6 +37,8 @@ public class PlayerFire : MonoBehaviour
                 Quaternion rot = Quaternion.FromToRotation(Vector3.forward, hitInfo.normal);
 
                 GameObject spark = Instantiate(fxEffect, hitInfo.point + (hitInfo.normal * 0.01f), rot);
+
+                em.hitDamage();
             }
 
             //레이어 마스크 사용 충돌처리(최적화)
