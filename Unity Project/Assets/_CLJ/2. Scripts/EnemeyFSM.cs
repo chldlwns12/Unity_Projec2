@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 //몬스터 유한상태머신
 public class EnemeyFSM : MonoBehaviour
@@ -21,6 +21,9 @@ public class EnemeyFSM : MonoBehaviour
     //애니메이션 제어하기 위한 애니메이터 컴포넌트
     Animator anim;
     //Quaternion startRotation;   //몬스터 시작회전값
+
+    //네비게이션
+    NavMeshAgent nav;
 
     //유용한 기능
     #region "Idle 상태에 필요한 변수들"
@@ -58,6 +61,7 @@ public class EnemeyFSM : MonoBehaviour
         player = GameObject.Find("Player").transform;
         spawnPoint = GameObject.Find("SpawnPoint").transform;
         anim = GetComponentInChildren<Animator>();
+        nav = GetComponent<NavMeshAgent>();
     }
 
     void Update()
@@ -112,9 +116,10 @@ public class EnemeyFSM : MonoBehaviour
         //- 공격범위 2미터
         //- 상태변경
         //- 상태전환 출력
-        transform.LookAt(player);
-        Vector3 dir = new Vector3(0, 0, 1);
-        transform.Translate(dir * EnemySpeed * Time.deltaTime);
+        //transform.LookAt(player);
+        //Vector3 dir = new Vector3(0, 0, 1);
+        //transform.Translate(dir * EnemySpeed * Time.deltaTime);
+        nav.SetDestination(player.position);
 
         if (Vector3.Distance(player.position, transform.position) < attackRange)
         {
@@ -162,12 +167,13 @@ public class EnemeyFSM : MonoBehaviour
         //- 처음위치에서 일정범위 30미터
         //- 상태변경
         //- 상태전환 출력
-        transform.LookAt(spawnPoint.transform);
-        Vector3 dir = new Vector3(0, 0, 1);
-        transform.Translate(dir * EnemySpeed * Time.deltaTime);
+        //transform.LookAt(spawnPoint.transform);
+        //Vector3 dir = new Vector3(0, 0, 1);
+        //transform.Translate(dir * EnemySpeed * Time.deltaTime);
+        nav.SetDestination(spawnPoint.position);
 
         //float distace = Vector3.Distance(player.position, transform.position);
-        if(Vector3.Distance(spawnPoint.position, transform.position) < returnRange)
+        if (Vector3.Distance(spawnPoint.position, transform.position) < returnRange)
         {
             state = EnemyState.Idle;
             print("State : Idle");
